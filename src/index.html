@@ -230,7 +230,6 @@
                     type: "POST",
                     url: "https://afagentportal-ro-uat.azurewebsites.net/api/AddShelfLabelToSession",
                dataType: "json",
-               headers: {'Authorization' : 'Bearer ' + token},
             contentType: "application/json; charset=utf-8",
                    data: '{"User":"barcodereader", "SessionCode":"856584","ItemBarcode":"'+barcode+ '"}',
                 success: function (respData, status, xhr) {
