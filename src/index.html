@@ -225,16 +225,36 @@
 
     function newBarcodeRead(barcode)
     {
-      var barcodeList = document.getElementById("barcodeList");
-      var listElement = document.createElement("div");
-      listElement.className = "col-lg-6 mb-2";
-      listElement.innerHTML = `<div class="card bg-success text-white shadow">
-                                    <div class="card-body">
-                                         ${barcode}
-                                        <div class="text-white-50 small">#1cc88a</div>
-                                    </div>
-                                </div>`;
-      barcodeList.appendChild(listElement);
+
+      $.ajax({
+                    type: "POST",
+                    url: "https://afagentportal-ro-uat.azurewebsites.net/api/AddShelfLabelToSession",
+               dataType: "json",
+               headers: {'Authorization' : 'Bearer ' + token},
+            contentType: "application/json; charset=utf-8",
+                   data: '{"User":"barcodereader", "SessionCode":"856584","ItemBarcode":"'+barcode+ '"}',
+                success: function (respData, status, xhr) {
+
+                  if (respData.length == 0) {
+
+                  } else {
+                    var barcodeList = document.getElementById("barcodeList");
+                    var listElement = document.createElement("div");
+                    listElement.className = "col-lg-6 mb-2";
+                    listElement.innerHTML = `<div class="card bg-success text-white shadow">
+                                             <div class="card-body">
+                                              ${barcode}
+                                            <div class="text-white-50 small">${respData[0].Name}</div>
+                                            </div>
+                                            </div>`;
+                    barcodeList.appendChild(listElement);
+                  }
+              },
+              error: function (xhr, status, error) {
+                  alert("Result" + ": " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+              }
+            })
+
     }
 
     // This method will trigger user permissions
