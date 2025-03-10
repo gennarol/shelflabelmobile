@@ -67,22 +67,7 @@
                 </div>
 
                 <!-- Content Row -->
-                <div class="row">
-
-                    <!-- Earnings (Monthly) Card Example -->
-                    <div class="col-6 col-md-6 col-xs-3 mb-4">
-                        <div class="card border-left-primary shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Scanned Items (Total)</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">20</div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="row mb-4">
 
                     <!-- Earnings (Monthly) Card Example -->
 
@@ -92,25 +77,28 @@
 
 
 
-                <div class="col-6 col-md-6 col-xs-3 mb-4">
-                        <div class="card border-left-success shadow h-100 py-2">
-                            <div class="card-body">
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Scanned Items (unique)</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">20</div>
+
+
+
+                <div class="col-6">
+                                <div class="card bg-primary text-white shadow">
+                                    <div class="card-body"># Scanned Items
+                                    <div id="numItems" class="text-white-50 small">0</div>
                                     </div>
-
                                 </div>
-                            </div>
-                        </div>
-                    </div></div>
+                            </div><div class="col-6">
+                                <div class="card bg-success text-white shadow">
+                                    <div class="card-body">Last scanned item
+                                      <div id="lastItem" class="text-white-50 small">...</div>
+                                    </div>
+                                </div>
+                            </div></div>
 
-                <!-- Content Row -->
 
 
 
-                <!-- Content Row -->
+
+
                 <div class="row">
 
                     <!-- Content Column -->
@@ -130,7 +118,7 @@
 
                         <!-- Color System -->
                         <div class="row">
-                            <div class="col-lg-6 mb-4">
+                            <div class="col-lg-6 mb-1">
                                 <div class="card bg-primary text-white shadow">
                                     <div class="card-body">
                                         Primary
@@ -225,10 +213,25 @@
   <script src="https://startbootstrap.github.io/startbootstrap-sb-admin-2/js/demo/chart-area-demo.js"></script>
   <script src="https://startbootstrap.github.io/startbootstrap-sb-admin-2/js/demo/chart-pie-demo.js"></script>
   <script>
-
+    var numItems = 0;
+    var lastItem = "";
     function onScanSuccess(decodedText, decodedResult) {
     // handle the scanned code as you like, for example:
+    numItems += 1;
+    lastItem = decodedText;
+    updateUI();
     console.log(`Code matched = ${decodedText}`, decodedResult);
+    }
+
+    function updateUI()
+    {
+      var elemNumItems = document.getElementById("numItems");
+      var elemLastItem = document.getElementById("lastItem");
+
+      elemNumItems.innerText = numItems;
+      elemLastItem.innerText = lastItem;
+
+
     }
 
     // This method will trigger user permissions
@@ -252,8 +255,9 @@
       console.warn(`Code scan error = ${error}`);
     }
     let html5QrcodeScanner = new Html5QrcodeScanner("reader",{ fps: 10, qrbox: {width: 250, height: 250} },/* verbose= */ false);
-    html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+     html5QrcodeScanner.render(onScanSuccess, onScanFailure);
   </script>
+
 
 
 
