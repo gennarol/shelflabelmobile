@@ -68,18 +68,6 @@
 
                 <!-- Content Row -->
                 <div class="row mb-4">
-
-                    <!-- Earnings (Monthly) Card Example -->
-
-
-
-
-
-
-
-
-
-
                 <div class="col-6">
                                 <div class="card bg-primary text-white shadow">
                                     <div class="card-body"># Scanned Items
@@ -93,12 +81,6 @@
                                     </div>
                                 </div>
                             </div></div>
-
-
-
-
-
-
                 <div class="row">
 
                     <!-- Content Column -->
@@ -117,7 +99,8 @@
                         </div>
 
                         <!-- Color System -->
-                        <div class="row">
+                        <div id="barcodeList" class="row">
+                          <!--
                             <div class="col-lg-6 mb-1">
                                 <div class="card bg-primary text-white shadow">
                                     <div class="card-body">
@@ -182,6 +165,7 @@
                                     </div>
                                 </div>
                             </div>
+                            -->
                         </div>
 
                     </div>
@@ -213,25 +197,44 @@
   <script src="https://startbootstrap.github.io/startbootstrap-sb-admin-2/js/demo/chart-area-demo.js"></script>
   <script src="https://startbootstrap.github.io/startbootstrap-sb-admin-2/js/demo/chart-pie-demo.js"></script>
   <script>
+    var barcodes = [];
     var numItems = 0;
     var lastItem = "";
     function onScanSuccess(decodedText, decodedResult) {
+      var idx = barcodes.indexOf(decodedText);
+      if (idx == -1)
+      {
+        barcodes.push(decodedText);
+        numItems = barcodes.length;
+        newBarcodeRead(decodedText);
+      }
+
     // handle the scanned code as you like, for example:
-    numItems += 1;
-    lastItem = decodedText;
-    updateUI();
-    console.log(`Code matched = ${decodedText}`, decodedResult);
+      lastItem = decodedText;
+      updateUI();
+      console.log(`Code matched = ${decodedText}`, decodedResult);
     }
 
     function updateUI()
     {
       var elemNumItems = document.getElementById("numItems");
       var elemLastItem = document.getElementById("lastItem");
-
       elemNumItems.innerText = numItems;
       elemLastItem.innerText = lastItem;
+    }
 
-
+    function newBarcodeRead(barcode)
+    {
+      var barcodeList = document.getElementById("barcodeList");
+      var listElement = document.createElement("div");
+      listElement.className = "col-lg-6 mb-2";
+      listElement.innerHTML = `<div class="card bg-success text-white shadow">
+                                    <div class="card-body">
+                                         ${barcode}
+                                        <div class="text-white-50 small">#1cc88a</div>
+                                    </div>
+                                </div>`;
+      barcodeList.appendChild(listElement);
     }
 
     // This method will trigger user permissions
@@ -257,10 +260,5 @@
     let html5QrcodeScanner = new Html5QrcodeScanner("reader",{ fps: 10, qrbox: {width: 250, height: 250} },/* verbose= */ false);
      html5QrcodeScanner.render(onScanSuccess, onScanFailure);
   </script>
-
-
-
-
-
-
-</body></html>
+</body>
+</html>
