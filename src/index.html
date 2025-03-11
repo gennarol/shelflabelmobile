@@ -188,7 +188,6 @@
 
 </div>
 
-
   <script src="https://startbootstrap.github.io/startbootstrap-sb-admin-2/vendor/jquery/jquery.min.js"></script>
   <script src="https://startbootstrap.github.io/startbootstrap-sb-admin-2/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="https://startbootstrap.github.io/startbootstrap-sb-admin-2/vendor/jquery-easing/jquery.easing.min.js"></script>
@@ -197,6 +196,7 @@
   <script src="https://startbootstrap.github.io/startbootstrap-sb-admin-2/js/demo/chart-area-demo.js"></script>
   <script src="https://startbootstrap.github.io/startbootstrap-sb-admin-2/js/demo/chart-pie-demo.js"></script>
   <script>
+
     var barcodes = [];
     var numItems = 0;
     var lastItem = "";
@@ -245,6 +245,16 @@
                 success: function (respData, status, xhr) {
 
                   if (respData.length == 0) {
+                    var barcodeList = document.getElementById("barcodeList");
+                    var listElement = document.createElement("div");
+                    listElement.className = "col-lg-6 mb-2";
+                    listElement.innerHTML = `<div class="card bg-danger text-white shadow">
+                                             <div class="card-body">
+                                              ${barcode}
+                                            <div class="text-white-50 small">Not found</div>
+                                            </div>
+                                            </div>`;
+                    barcodeList.appendChild(listElement);
 
                   } else {
                     var barcodeList = document.getElementById("barcodeList");
@@ -253,7 +263,7 @@
                     listElement.innerHTML = `<div class="card bg-success text-white shadow">
                                              <div class="card-body">
                                               ${barcode}
-                                            <div class="text-white-50 small">${respData[0].Name}</div>
+                                            <div class="text-white-50 small">${respData[0].NAME}</div>
                                             </div>
                                             </div>`;
                     barcodeList.appendChild(listElement);
