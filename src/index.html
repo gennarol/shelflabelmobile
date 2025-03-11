@@ -240,7 +240,6 @@
       var idx = barcodes.indexOf(decodedText);
       if (idx == -1)
       {
-        barcodes.push(decodedText);
         numItems = barcodes.length;
         newBarcodeRead(decodedText);
       }
@@ -272,6 +271,7 @@
                   elemContainer.className = "";
 
                   if (respData.length == 0) {
+                    barcodes.push(decodedText);
                     elemContainer.className = "card bg-success text-white shadow";
                     var barcodeList = document.getElementById("barcodeList");
                     var listElement = document.createElement("div");
