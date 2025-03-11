@@ -214,6 +214,7 @@
 
     const connection = new signalR.HubConnectionBuilder()
         .withUrl("https://azfmaftest.azurewebsites.net/api")
+        .withAutomaticReconnect()
         .configureLogging(signalR.LogLevel.Information)
         .build();
 
