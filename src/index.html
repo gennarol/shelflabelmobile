@@ -237,17 +237,21 @@
     }
 
     function onScanSuccess(decodedText, decodedResult) {
-      var idx = barcodes.indexOf(decodedText);
-      if (idx == -1)
-      {
-        numItems = barcodes.length;
-        newBarcodeRead(decodedText);
-      }
 
-      // handle the scanned code as you like, for example:
-      lastItem = decodedText;
-      updateUI();
-      console.log(`Code matched = ${decodedText}`, decodedResult);
+      if (lastItem != decodedText)
+      {
+        var idx = barcodes.indexOf(decodedText);
+        if (idx == -1)
+        {
+          numItems = barcodes.length;
+          newBarcodeRead(decodedText);
+        }
+
+        // handle the scanned code as you like, for example:
+        lastItem = decodedText;
+        updateUI();
+        console.log(`Code matched = ${decodedText}`, decodedResult);
+      }
     }
 
     function updateUI()
