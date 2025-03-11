@@ -195,6 +195,8 @@
   <script src="https://startbootstrap.github.io/startbootstrap-sb-admin-2/vendor/chart.js/Chart.min.js"></script>
   <script src="https://startbootstrap.github.io/startbootstrap-sb-admin-2/js/demo/chart-area-demo.js"></script>
   <script src="https://startbootstrap.github.io/startbootstrap-sb-admin-2/js/demo/chart-pie-demo.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.7/signalr.min.js"></script>
+
   <script>
 
     var barcodes = [];
@@ -208,6 +210,18 @@
 
     var sessionElem       = document.getElementById("sessionId");
     sessionElem.innerText = sessionIdString;
+
+
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("https://azfmaftest.azurewebsites.net/api")
+        .configureLogging(signalR.LogLevel.Information)
+        .build();
+
+    connection.on('newMessage', (message) => {
+        console.log(message);
+    });
+
+    connection.start().catch(console.error);
 
 
 
