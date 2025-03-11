@@ -268,8 +268,11 @@
             contentType: "application/json; charset=utf-8",
                    data: '{"User":"barcodereader", "SessionCode":"' + sessionId +'","ItemBarcode":"'+barcode+ '"}',
                 success: function (respData, status, xhr) {
+                  var elemContainer = document.getElementById("lastItemContainer");
+                  elemContainer.className = "";
 
                   if (respData.length == 0) {
+                    elemContainer.className = "card bg-success text-white shadow";
                     var barcodeList = document.getElementById("barcodeList");
                     var listElement = document.createElement("div");
                     listElement.className = "col-lg-6 mb-2";
@@ -282,6 +285,7 @@
                     barcodeList.appendChild(listElement);
 
                   } else {
+                    elemContainer.className = "card bg-danger text-white shadow";
                     var barcodeList = document.getElementById("barcodeList");
                     var listElement = document.createElement("div");
                     listElement.className = "col-lg-6 mb-2";
