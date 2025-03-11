@@ -62,7 +62,7 @@
 
                 <!-- Page Heading -->
                 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                    <p class="h5 mb-0 text-gray-800">Session: 399009</p>
+                    <p id="sessionId" class="h5 mb-0 text-gray-800">Session: 399009</p>
 
                 </div>
 
@@ -200,6 +200,17 @@
     var barcodes = [];
     var numItems = 0;
     var lastItem = "";
+
+    const queryString     = window.location.search;
+    const urlParams       = new URLSearchParams(queryString);
+    const sessionId       = urlParams.get('sessionId');
+    const sessionIdString = "Session:" + sessionId;
+
+    var sessionElem       = document.getElementById("sessionId");
+    sessionElem.innerText = sessionIdString;
+
+
+
     function onScanSuccess(decodedText, decodedResult) {
       var idx = barcodes.indexOf(decodedText);
       if (idx == -1)
@@ -209,7 +220,7 @@
         newBarcodeRead(decodedText);
       }
 
-    // handle the scanned code as you like, for example:
+      // handle the scanned code as you like, for example:
       lastItem = decodedText;
       updateUI();
       console.log(`Code matched = ${decodedText}`, decodedResult);
@@ -225,13 +236,12 @@
 
     function newBarcodeRead(barcode)
     {
-
       $.ajax({
                     type: "POST",
                     url: "https://afagentportal-ro-uat.azurewebsites.net/api/AddShelfLabelToSession",
                dataType: "json",
             contentType: "application/json; charset=utf-8",
-                   data: '{"User":"barcodereader", "SessionCode":"856584","ItemBarcode":"'+barcode+ '"}',
+                   data: '{"User":"barcodereader", "SessionCode":"' + sessionId +'","ItemBarcode":"'+barcode+ '"}',
                 success: function (respData, status, xhr) {
 
                   if (respData.length == 0) {
@@ -253,7 +263,6 @@
                   alert("Result" + ": " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
               }
             })
-
     }
 
     // This method will trigger user permissions
