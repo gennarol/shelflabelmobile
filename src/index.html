@@ -30,31 +30,25 @@
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
 
-                <ul class="navbar-nav ml-auto">
+                        <ul class="navbar-nav">
 
-                    <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                    <li class="nav-item brand">
-                        <a class="nav-link brand logo bg-green" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <h2>Shelf label scanning</h2>
-                        </a>
-                        <!-- Dropdown - Messages -->
+                            <li class="nav-item mb-2 pl-1 py-3">
+                                <button class="btn" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Shelf label printing
+                                </button>
+                                <!-- Dropdown - Messages -->
 
-                    </li>
+                            </li>
 
-                    <!-- Nav Item - Alerts -->
+                        <li class="nav-item mb-2 pl-1 py-3">
+                                <button class="btn btn-primary" onclick="closeSession()" id="closeSession" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Close Session
+                                </button>
+                                <!-- Dropdown - Messages -->
 
+                            </li></ul>
 
-                    <!-- Nav Item - Messages -->
-
-
-
-
-                    <!-- Nav Item - User Information -->
-
-
-                </ul>
-
-            </nav>
+                    </nav>
             <!-- End of Topbar -->
 
             <!-- Begin Page Content -->
@@ -224,7 +218,23 @@
 
     connection.start().catch(console.error);
 
+    function closeSession()
+    {
+      $.ajax({
+                    type: "POST",
+                    url: "https://azfmaftest.azurewebsites.net/api/sendMessage",
+               dataType: "json",
+            contentType: "application/json; charset=utf-8",
+                   data: '{"SessionId":"' + sessionId + '"}',
+                success: function (respData, status, xhr) {
+                alert("Session closed!")
+              },
+              error: function (xhr, status, error) {
 
+              }
+            })
+
+    }
 
     function onScanSuccess(decodedText, decodedResult) {
       var idx = barcodes.indexOf(decodedText);
@@ -311,7 +321,7 @@
       console.warn(`Code scan error = ${error}`);
     }
     let html5QrcodeScanner = new Html5QrcodeScanner("reader",{ fps: 10, qrbox: {width: 250, height: 250} },/* verbose= */ false);
-     html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+    html5QrcodeScanner.render(onScanSuccess, onScanFailure);
   </script>
 </body>
 </html>
