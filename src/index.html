@@ -271,8 +271,8 @@
                   elemContainer.className = "";
 
                   if (respData.length == 0) {
-                    barcodes.push(barcode);
-                    elemContainer.className = "card bg-success text-white shadow";
+
+                    elemContainer.className = "card bg-danger text-white shadow";
                     var barcodeList = document.getElementById("barcodeList");
                     var listElement = document.createElement("div");
                     listElement.className = "col-lg-6 mb-2";
@@ -285,7 +285,8 @@
                     barcodeList.appendChild(listElement);
 
                   } else {
-                    elemContainer.className = "card bg-danger text-white shadow";
+                    elemContainer.className = "card bg-success text-white shadow";
+                    barcodes.push(barcode);
                     var barcodeList = document.getElementById("barcodeList");
                     var listElement = document.createElement("div");
                     listElement.className = "col-lg-6 mb-2";
