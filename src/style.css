@@ -1,0 +1,15 @@
+.grid-stack {
+    background: rgb(249 250 251 / var(--tw-bg-opacity, 1));
+  }
+
+  .grid-stack-item-content {    
+    text-align: center;
+    background-color: white;    
+    display: flex;
+    align-items: center;
+    justify-content: center;    
+    border-radius: 8px;
+    text-align: center;
+    font-family: 'Lexend', sans-serif;
+  }
+  
